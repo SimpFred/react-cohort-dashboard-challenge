@@ -4,9 +4,10 @@ import PropTypes from "prop-types";
 import { CohortAppContext } from "../../../context";
 import { FaPaperPlane } from "react-icons/fa";
 import { update } from "../../../api/api";
+import ProfileCircle from "../../ProfileCircle";
 
 const CommentList = styled.div`
-  margin-top: 20px;
+  margin: 20px auto;
 `;
 
 const Comment = styled.div`
@@ -19,6 +20,7 @@ const Comment = styled.div`
 const CommentForm = styled.form`
   display: flex;
   flex-direction: column;
+  margin-right: 20px;
   margin-top: 10px;
   position: relative;
 `;
@@ -27,7 +29,6 @@ const TextArea = styled.textarea`
   padding: 10px;
   background-color: #e6ebf5;
   color: #6d6d93;
-  padding-right: 50px; /* Extra padding för att ge plats åt ikonen */
   border: none;
   border-radius: 4px;
   resize: none;
@@ -37,16 +38,28 @@ const TextArea = styled.textarea`
 
 const IconWrapper = styled.div`
   position: absolute;
-  right: 10px;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
   color: #3498db;
 `;
 
+const CommentContainer = styled.div`
+  display: flex;
+  align-items: center; /* Vertikal centrering */
+`;
+
+const CommentText = styled(Comment)`
+  flex: 1;
+  margin-left: 10px;
+  padding: 10px;
+  font-size: 1rem;
+`;
+
 const CommentSection = ({ post }) => {
   const [newComment, setNewComment] = useState("");
-  const { posts, setPosts } = useContext(CohortAppContext);
+  const { posts, setPosts, userProfile } = useContext(CohortAppContext);
 
   const onAddComment = async (comment) => {
     const updatedPost = {
@@ -66,7 +79,12 @@ const CommentSection = ({ post }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (newComment.trim()) {
-      onAddComment(newComment);
+      const comment = {
+        text: newComment,
+        firstName: userProfile.firstName,
+        lastName: userProfile.lastName,
+      };
+      onAddComment(comment);
       setNewComment("");
     }
   };
@@ -77,12 +95,17 @@ const CommentSection = ({ post }) => {
         {post.comments &&
           post.comments.length > 0 &&
           post.comments.map((comment, index) => (
-            <Comment key={index}>{comment}</Comment>
+            <CommentContainer key={index}>
+              <ProfileCircle
+                firstName={comment.firstName}
+                lastName={comment.lastName}
+              />
+              <CommentText>{comment.text}</CommentText>
+            </CommentContainer>
           ))}
       </CommentList>
       <CommentForm onSubmit={handleSubmit}>
         <TextArea
-          style={{ padding: "10px" }}
           rows="1"
           placeholder="Add a comment..."
           value={newComment}
