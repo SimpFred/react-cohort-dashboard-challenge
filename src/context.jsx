@@ -8,6 +8,7 @@ export const CohortAppProvider = ({ children }) => {
   const [contacts, setContacts] = useState([]);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [userProfile] = contacts.filter((contact) => contact.id === 1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,6 +28,11 @@ export const CohortAppProvider = ({ children }) => {
     fetchData();
   }, []);
 
+  if (!loading) {
+    console.log(contacts);
+    console.log(posts);
+  }
+
   return (
     <CohortAppContext.Provider
       value={{
@@ -35,6 +41,7 @@ export const CohortAppProvider = ({ children }) => {
         posts,
         setPosts,
         loading,
+        userProfile,
       }}
     >
       {children}
