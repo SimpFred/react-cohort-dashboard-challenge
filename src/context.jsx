@@ -28,11 +28,6 @@ export const CohortAppProvider = ({ children }) => {
     fetchData();
   }, []);
 
-  if (!loading) {
-    console.log(contacts);
-    console.log(posts);
-  }
-
   return (
     <CohortAppContext.Provider
       value={{
