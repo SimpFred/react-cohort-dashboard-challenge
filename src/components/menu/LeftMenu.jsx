@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import homeIcon from "../../assets/home-icon-svg.svg";
 import profileIcon from "../../assets/profile-icon-svg.svg";
+import { Link } from "react-router-dom";
+import { CohortAppContext } from "../../context";
+import { useContext } from "react";
 
 const MenuContainer = styled.div`
   width: 100%;
@@ -12,12 +15,13 @@ const MenuContainer = styled.div`
   align-items: center;
 `;
 
-const MenuItem = styled.div`
+const MenuItem = styled(Link)`
   width: 100%;
   padding: 20px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-decoration: none;
   cursor: pointer;
   &:hover {
     background-color: #e6ebf5;
@@ -36,18 +40,15 @@ const Text = styled.span`
 `;
 
 const LeftMenu = () => {
-  const handleMenuItemClick = (menuItem) => {
-    console.log(`${menuItem} clicked`);
-    // Lägg till din navigeringslogik här, t.ex. använd React Router för att navigera
-  };
-
+  const { userProfile } = useContext(CohortAppContext);
+  console.log(userProfile.id + " : userProfile.id");
   return (
     <MenuContainer>
-      <MenuItem onClick={() => handleMenuItemClick("Home")}>
+      <MenuItem to={"/"}>
         <Icon src={homeIcon} alt="Home Icon" />
         <Text>Home</Text>
       </MenuItem>
-      <MenuItem onClick={() => handleMenuItemClick("Profile")}>
+      <MenuItem to={`/profile/${userProfile.id}`}>
         <Icon src={profileIcon} alt="Profile Icon" />
         <Text>Profile</Text>
       </MenuItem>
