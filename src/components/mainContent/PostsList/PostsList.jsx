@@ -10,7 +10,7 @@ const PostList = () => {
   return (
     <div className="post-list">
       {sortedPosts.map((post) => (
-        <PostItem key={post.id} post={post} />
+        <PostItem key={post.id} showAllComments={false} post={post} />
       ))}
     </div>
   );
