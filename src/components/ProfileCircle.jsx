@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 const Circle = styled(Link)`
   width: ${(props) => props.width || "40px"};
   height: ${(props) => props.height || "40px"};
+  min-width: 40px;
   border-radius: 50%;
   background-color: #64dc78;
   color: #000046;
