@@ -9,6 +9,7 @@ const Circle = styled(Link)`
   background-color: #64dc78;
   color: #000046;
   display: flex;
+  text-decoration: none;
   justify-content: center;
   align-items: center;
   font-size: 1rem;
