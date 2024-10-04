@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const Circle = styled.div`
+const Circle = styled(Link)`
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -19,14 +20,16 @@ const getInitials = (firstName, lastName) => {
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 };
 
-const ProfileCircle = ({ firstName, lastName }) => {
+const ProfileCircle = ({ id, firstName, lastName }) => {
+  console.log(id + " : id in ProfileCircle");
   const initials = getInitials(firstName, lastName);
-  return <Circle>{initials}</Circle>;
+  return <Circle to={`/profile/${id}`}>{initials}</Circle>;
 };
 
 ProfileCircle.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
+  id: PropTypes.number,
 };
 
 export default ProfileCircle;
