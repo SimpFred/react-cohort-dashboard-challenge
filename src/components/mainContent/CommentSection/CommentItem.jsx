@@ -7,16 +7,15 @@ const CommentContainer = styled.div`
   margin-left: 15px;
   display: flex;
   align-items: center;
+  width: auto;
   margin-bottom: 10px;
 `;
 
 const CommentText = styled.div`
-  flex: 1;
   margin-left: 10px;
   background-color: #e6ebf5;
-  padding: 8px 0 8px 15px;
+  padding: 10px 80px 10px 15px;
   font-size: 1rem;
-  display: inline-block;
   width: auto;
   border-radius: 4px;
 `;
