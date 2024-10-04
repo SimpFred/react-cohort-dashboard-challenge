@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { useContext } from "react";
 import { CohortAppContext } from "../../../context";
 import PostItemHeader from "./PostItemHeader";
-import CommentSection from "../PostComment/PostComment";
+import CommentSection from "../CommentSection/CommentSection";
 
 const Card = styled.div`
   background-color: #fff;
