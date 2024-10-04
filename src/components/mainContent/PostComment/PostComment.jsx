@@ -5,6 +5,7 @@ import { CohortAppContext } from "../../../context";
 import { FaPaperPlane } from "react-icons/fa";
 import { update } from "../../../api/api";
 import ProfileCircle from "../../ProfileCircle";
+import { Link } from "react-router-dom";
 
 const CommentList = styled.div`
   margin: 20px auto;
@@ -64,6 +65,13 @@ const CommentText = styled(Comment)`
   font-size: 1rem;
   display: inline-block; /* Gör att boxen anpassar sig efter innehållet */
   width: auto; /* Gör att bredden anpassar sig efter innehållet */
+`;
+
+const CommentHeader = styled(Link)`
+  color: #000046;
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
 `;
 
 const ShowMoreButton = styled.button`
@@ -138,9 +146,9 @@ const CommentSection = ({ post, showAllComments = true }) => {
                 lastName={comment.lastName}
               />
               <CommentText>
-                <p style={{ fontWeight: "bold", margin: 1 }}>
+                <CommentHeader to={`/profile/${comment.contactId}`}>
                   {comment.firstName} {comment.lastName}
-                </p>
+                </CommentHeader>
                 <p style={{ margin: 1 }}>{comment.text}</p>
               </CommentText>
             </CommentContainer>
