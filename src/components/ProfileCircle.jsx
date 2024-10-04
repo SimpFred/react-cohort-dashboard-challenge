@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const Circle = styled(Link)`
-  width: 40px;
-  height: 40px;
+  width: ${(props) => props.width || "40px"};
+  height: ${(props) => props.height || "40px"};
   border-radius: 50%;
   background-color: #64dc78;
   color: #000046;
@@ -12,7 +12,7 @@ const Circle = styled(Link)`
   text-decoration: none;
   justify-content: center;
   align-items: center;
-  font-size: 1rem;
+  font-size: ${(props) => (props.width ? "1.5rem" : "1rem")};
   font-weight: bold;
 `;
 
@@ -21,16 +21,21 @@ const getInitials = (firstName, lastName) => {
   return `${firstName.charAt(0)}${lastName.charAt(0)}`.toUpperCase();
 };
 
-const ProfileCircle = ({ id, firstName, lastName }) => {
-  console.log(id + " : id in ProfileCircle");
+const ProfileCircle = ({ id, firstName, lastName, width, height }) => {
   const initials = getInitials(firstName, lastName);
-  return <Circle to={`/profile/${id}`}>{initials}</Circle>;
+  return (
+    <Circle to={`/profile/${id}`} width={width} height={height}>
+      {initials}
+    </Circle>
+  );
 };
 
 ProfileCircle.propTypes = {
   firstName: PropTypes.string,
   lastName: PropTypes.string,
   id: PropTypes.number,
+  width: PropTypes.string,
+  height: PropTypes.string,
 };
 
 export default ProfileCircle;
