@@ -21,21 +21,22 @@ const TextContent = styled.p`
   color: #47477a;
 `;
 
-const PostItem = ({ post }) => {
+const PostItem = ({ post, showAllComments }) => {
   const { contacts } = useContext(CohortAppContext);
   const author = contacts.find((contact) => contact.id === post.contactId);
 
   return (
     <Card>
-      <PostItemHeader author={author} title={post.title} />
+      <PostItemHeader postId={post.id} author={author} title={post.title} />
       <TextContent>{post.content}</TextContent>
-      <CommentSection post={post} />
+      <CommentSection showAllComments={showAllComments} post={post} />
     </Card>
   );
 };
 
 PostItem.propTypes = {
   post: PropTypes.object.isRequired,
+  showAllComments: PropTypes.bool,
 };
 
 export default PostItem;
