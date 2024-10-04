@@ -41,7 +41,6 @@ const Text = styled.span`
 
 const LeftMenu = () => {
   const { userProfile } = useContext(CohortAppContext);
-  console.log(userProfile.id + " : userProfile.id");
   return (
     <MenuContainer>
       <MenuItem to={"/"}>
