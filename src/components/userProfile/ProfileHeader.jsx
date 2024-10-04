@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import ProfileCircle from "../ProfileCircle";
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import { ProfileContext } from "./UserProfile";
 
 const NameHeader = styled.div`
   display: flex;
@@ -16,23 +17,22 @@ const NameText = styled.span`
   margin-left: 10px;
 `;
 
-const ProfileHeader = ({ firstName, lastName }) => (
-  <NameHeader>
-    <ProfileCircle
-      width="60px"
-      height="60px"
-      firstName={firstName}
-      lastName={lastName}
-    />
-    <NameText>
-      {firstName} {lastName}
-    </NameText>
-  </NameHeader>
-);
+const ProfileHeader = () => {
+  const { user } = useContext(ProfileContext);
 
-ProfileHeader.propTypes = {
-  firstName: PropTypes.string.isRequired,
-  lastName: PropTypes.string.isRequired,
+  return (
+    <NameHeader>
+      <ProfileCircle
+        width="60px"
+        height="60px"
+        firstName={user.firstName}
+        lastName={user.lastName}
+      />
+      <NameText>
+        {user.firstName} {user.lastName}
+      </NameText>
+    </NameHeader>
+  );
 };
 
 export default ProfileHeader;

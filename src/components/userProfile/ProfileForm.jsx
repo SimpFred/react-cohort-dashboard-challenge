@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import FormField from "./FormField";
 import SubmitButton from "./SubmitButton";
-import PropTypes from "prop-types";
+import { useContext } from "react";
+import { ProfileContext } from "./UserProfile";
 
 const Columns = styled.div`
   display: flex;
@@ -27,61 +28,59 @@ const ButtonContainer = styled.div`
   margin-right: 20px;
 `;
 
-const ProfileForm = ({ newContact, handleChange, handleSubmit }) => (
-  <form onSubmit={handleSubmit}>
-    <Columns>
-      <Column>
-        <SectionHeader>Account Info</SectionHeader>
-        <FormField
-          label="First Name*"
-          type="text"
-          name="firstName"
-          value={newContact.firstName}
-          onChange={handleChange}
-        />
-        <FormField
-          label="Last Name*"
-          type="text"
-          name="lastName"
-          value={newContact.lastName}
-          onChange={handleChange}
-        />
-        <FormField
-          label="Email*"
-          type="text"
-          name="email"
-          value={newContact.email}
-          onChange={handleChange}
-        />
-      </Column>
-      <Column>
-        <SectionHeader>Address</SectionHeader>
-        <FormField
-          label="Street"
-          type="text"
-          name="street"
-          value={newContact.street}
-          onChange={handleChange}
-        />
-        <FormField
-          label="City"
-          type="text"
-          name="city"
-          value={newContact.city}
-          onChange={handleChange}
-        />
-      </Column>
-    </Columns>
-    <ButtonContainer>
-      <SubmitButton type="submit">Update</SubmitButton>
-    </ButtonContainer>
-  </form>
-);
+const ProfileForm = () => {
+  const { newContact, handleChange, handleSubmit } = useContext(ProfileContext);
 
-ProfileForm.propTypes = {
-  newContact: PropTypes.object.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  return (
+    <form onSubmit={handleSubmit}>
+      <Columns>
+        <Column>
+          <SectionHeader>Account Info</SectionHeader>
+          <FormField
+            label="First Name*"
+            type="text"
+            name="firstName"
+            value={newContact.firstName}
+            onChange={handleChange}
+          />
+          <FormField
+            label="Last Name*"
+            type="text"
+            name="lastName"
+            value={newContact.lastName}
+            onChange={handleChange}
+          />
+          <FormField
+            label="Email*"
+            type="text"
+            name="email"
+            value={newContact.email}
+            onChange={handleChange}
+          />
+        </Column>
+        <Column>
+          <SectionHeader>Address</SectionHeader>
+          <FormField
+            label="Street"
+            type="text"
+            name="street"
+            value={newContact.street}
+            onChange={handleChange}
+          />
+          <FormField
+            label="City"
+            type="text"
+            name="city"
+            value={newContact.city}
+            onChange={handleChange}
+          />
+        </Column>
+      </Columns>
+      <ButtonContainer>
+        <SubmitButton type="submit">Update</SubmitButton>
+      </ButtonContainer>
+    </form>
+  );
 };
 
 export default ProfileForm;

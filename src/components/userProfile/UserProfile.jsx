@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { CohortAppContext } from "../../context";
-import { useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import ProfileHeader from "./ProfileHeader";
 import ProfileForm from "./ProfileForm";
 import { update } from "../../api/api";
@@ -28,6 +28,8 @@ const Card = styled.div`
   padding: 10px;
   width: 90%;
 `;
+
+export const ProfileContext = createContext();
 
 const UserProfile = () => {
   const { userId } = useParams();
@@ -83,16 +85,26 @@ const UserProfile = () => {
     setContacts(updatedContacts);
   };
 
+  const ContextValues = {
+    newContact,
+    setNewContact,
+    user,
+    handleChange,
+    handleSubmit,
+  };
+
   return (
     <Profile>
       <ProfileHeaderContainer>Profile</ProfileHeaderContainer>
       <Card>
-        <ProfileHeader firstName={user.firstName} lastName={user.lastName} />
-        <ProfileForm
-          newContact={newContact}
-          handleChange={handleChange}
-          handleSubmit={handleSubmit}
-        />
+        <ProfileContext.Provider value={ContextValues}>
+          <ProfileHeader firstName={user.firstName} lastName={user.lastName} />
+          <ProfileForm
+            newContact={newContact}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+          />
+        </ProfileContext.Provider>
       </Card>
     </Profile>
   );
