@@ -3,9 +3,11 @@ import PropTypes from "prop-types";
 import ProfileCircle from "../../ProfileCircle";
 import { Link } from "react-router-dom";
 
-const Header = styled.div`
+const Header = styled(Link)`
   display: flex;
+  color: #000046;
   align-items: center;
+  text-decoration: none;
   margin-left: 15px;
 `;
 
@@ -26,7 +28,7 @@ const TitleWrapper = styled(Link)`
 
 const PostItemHeader = ({ author, title, postId }) => {
   return (
-    <Header>
+    <Header to={`/profile/${author.id}`}>
       <ProfileCircle
         id={author.id}
         firstName={author.firstName}
