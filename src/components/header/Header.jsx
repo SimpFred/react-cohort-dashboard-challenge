@@ -32,6 +32,7 @@ const Header = () => {
       <Icon src={titleHeader} alt="Title Icon" />
       <ProfileCircleWrapper>
         <ProfileCircle
+          id={userProfile.id}
           firstName={userProfile.firstName}
           lastName={userProfile.lastName}
         />
