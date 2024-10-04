@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import ProfileCircle from "../../ProfileCircle";
+import { Link } from "react-router-dom";
 
 const Header = styled.div`
   display: flex;
@@ -9,6 +10,7 @@ const Header = styled.div`
 `;
 
 const NameTitleWrapper = styled.div`
+  flex: 1;
   font-size: 1.5rem;
   font-weight: bold;
   display: flex;
@@ -16,19 +18,23 @@ const NameTitleWrapper = styled.div`
   margin-left: 15px;
 `;
 
-const TitleWrapper = styled.p`
+const TitleWrapper = styled(Link)`
   font-size: 1rem;
   color: #67678e;
   margin: 0;
 `;
 
-const PostItemHeader = ({ author, title }) => {
+const PostItemHeader = ({ author, title, postId }) => {
   return (
     <Header>
-      <ProfileCircle firstName={author.firstName} lastName={author.lastName} />
+      <ProfileCircle
+        id={author.id}
+        firstName={author.firstName}
+        lastName={author.lastName}
+      />
       <NameTitleWrapper>
         {author.firstName} {author.lastName}
-        <TitleWrapper>{title}</TitleWrapper>
+        <TitleWrapper to={`/post/${postId}`}>{title}</TitleWrapper>
       </NameTitleWrapper>
     </Header>
   );
@@ -37,6 +43,7 @@ const PostItemHeader = ({ author, title }) => {
 PostItemHeader.propTypes = {
   author: PropTypes.object.isRequired,
   title: PropTypes.string.isRequired,
+  postId: PropTypes.number.isRequired,
 };
 
 export default PostItemHeader;
