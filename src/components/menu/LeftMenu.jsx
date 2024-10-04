@@ -17,7 +17,7 @@ const MenuContainer = styled.div`
 
 const MenuItem = styled(Link)`
   width: 100%;
-  padding: 20px 20px;
+  padding: 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
