@@ -16,9 +16,9 @@ const Comment = styled.div`
   border-radius: 4px;
   padding: 0;
   margin-bottom: 10px;
-  display: inline-block; /* Gör att boxen anpassar sig efter innehållet */
-  max-width: 100%; /* Begränsar den maximala bredden */
-  width: auto; /* Gör att bredden anpassar sig efter innehållet */
+  display: inline-block;
+  max-width: 100%;
+  width: auto;
 `;
 
 const CommentForm = styled.form`
@@ -54,7 +54,7 @@ const IconWrapper = styled.div`
 const CommentContainer = styled.div`
   margin-left: 15px;
   display: flex;
-  align-items: center; /* Vertikal centrering */
+  align-items: center;
 `;
 
 const CommentText = styled(Comment)`
@@ -63,8 +63,8 @@ const CommentText = styled(Comment)`
   background-color: #e6ebf5;
   padding: 8px 0 8px 15px;
   font-size: 1rem;
-  display: inline-block; /* Gör att boxen anpassar sig efter innehållet */
-  width: auto; /* Gör att bredden anpassar sig efter innehållet */
+  display: inline-block;
+  width: auto;
 `;
 
 const CommentHeader = styled(Link)`
@@ -99,11 +99,11 @@ const CommentSection = ({ post, showAllComments = true }) => {
       comments: [...(post.comments || []), comment],
     };
 
-    console.log(updatedPost);
     const updatedPostFromApi = await update("post", post.id, updatedPost);
-    console.log(updatedPostFromApi);
 
-    const updatedPosts = posts.map((p) => (p.id === post.id ? updatedPost : p));
+    const updatedPosts = posts.map((p) =>
+      p.id === post.id ? updatedPostFromApi : p
+    );
 
     setPosts(updatedPosts);
   };
