@@ -102,6 +102,7 @@ const CreatePost = () => {
       <Form onSubmit={handleSubmit}>
         <InputGroup>
           <ProfileCircle
+            id={userProfile.id}
             firstName={userProfile.firstName}
             lastName={userProfile.lastName}
           />
