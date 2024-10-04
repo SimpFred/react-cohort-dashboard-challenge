@@ -6,6 +6,9 @@ import Header from "./components/header/Header";
 import LeftMenu from "./components/menu/LeftMenu";
 import styled from "styled-components";
 import MainContent from "./components/mainContent/MainContent";
+import { Route, Routes } from "react-router-dom";
+import PostDetail from "./components/mainContent/PostDetail";
+import UserProfile from "./components/userProfile/UserProfile";
 
 const AppContainer = styled.div`
   display: grid;
@@ -42,17 +45,23 @@ function App() {
   }
 
   return (
-    <AppContainer>
-      <HeaderContainer className="Header">
-        <Header />
-      </HeaderContainer>
-      <MenuContainer className="Menu">
-        <LeftMenu />
-      </MenuContainer>
-      <MainContainer className="Main">
-        <MainContent />
-      </MainContainer>
-    </AppContainer>
+    <div className="App">
+      <AppContainer>
+        <HeaderContainer className="Header">
+          <Header />
+        </HeaderContainer>
+        <MenuContainer className="Menu">
+          <LeftMenu />
+        </MenuContainer>
+        <MainContainer className="Main">
+          <Routes>
+            <Route path="/" element={<MainContent />} />
+            <Route path="/post/:postId" element={<PostDetail />} />
+            <Route path="/profile/:userId" element={<UserProfile />} />
+          </Routes>
+        </MainContainer>
+      </AppContainer>
+    </div>
   );
 }
 
