@@ -11,22 +11,27 @@ const CommentList = styled.div`
 `;
 
 const Comment = styled.div`
-  background-color: #f9f9f9;
+  background-color: #e6ebf5;
   border-radius: 4px;
-  padding: 10px;
+  padding: 0;
   margin-bottom: 10px;
+  display: inline-block; /* Gör att boxen anpassar sig efter innehållet */
+  max-width: 100%; /* Begränsar den maximala bredden */
+  width: auto; /* Gör att bredden anpassar sig efter innehållet */
 `;
 
 const CommentForm = styled.form`
   display: flex;
-  flex-direction: column;
-  margin-right: 20px;
+  flex-direction: row;
   margin-top: 10px;
+  margin-left: 15px;
   position: relative;
 `;
 
 const TextArea = styled.textarea`
+  flex: 1;
   padding: 10px;
+  margin-left: 10px;
   background-color: #e6ebf5;
   color: #6d6d93;
   border: none;
@@ -39,13 +44,14 @@ const TextArea = styled.textarea`
 const IconWrapper = styled.div`
   position: absolute;
   right: 0;
-  top: 50%;
+  top: 60%;
   transform: translateY(-50%);
   cursor: pointer;
   color: #3498db;
 `;
 
 const CommentContainer = styled.div`
+  margin-left: 15px;
   display: flex;
   align-items: center; /* Vertikal centrering */
 `;
@@ -53,12 +59,30 @@ const CommentContainer = styled.div`
 const CommentText = styled(Comment)`
   flex: 1;
   margin-left: 10px;
-  padding: 10px;
+  background-color: #e6ebf5;
+  padding: 8px 0 8px 15px;
   font-size: 1rem;
+  display: inline-block; /* Gör att boxen anpassar sig efter innehållet */
+  width: auto; /* Gör att bredden anpassar sig efter innehållet */
 `;
 
-const CommentSection = ({ post }) => {
+const ShowMoreButton = styled.button`
+  background: none;
+  border: none;
+  color: #6d6d93;
+  cursor: pointer;
+  margin-bottom: 10px;
+  font-size: 1rem;
+
+  &:hover {
+    text-decoration: none;
+  }
+`;
+
+const CommentSection = ({ post, showAllComments = true }) => {
   const [newComment, setNewComment] = useState("");
+  const [showAll, setShowAll] = useState(showAllComments);
+
   const { posts, setPosts, userProfile } = useContext(CohortAppContext);
 
   const onAddComment = async (comment) => {
@@ -81,6 +105,7 @@ const CommentSection = ({ post }) => {
     if (newComment.trim()) {
       const comment = {
         text: newComment,
+        contactId: userProfile.id,
         firstName: userProfile.firstName,
         lastName: userProfile.lastName,
       };
@@ -89,22 +114,43 @@ const CommentSection = ({ post }) => {
     }
   };
 
+  const commentsToShow = post.comments
+    ? showAll
+      ? post.comments
+      : post.comments.slice(-3)
+    : [];
+
   return (
     <div>
       <CommentList>
+        {post.comments && post.comments.length > 3 && (
+          <ShowMoreButton onClick={() => setShowAll(!showAll)}>
+            {showAll ? "Show less" : "Show all"} comments
+          </ShowMoreButton>
+        )}
         {post.comments &&
           post.comments.length > 0 &&
-          post.comments.map((comment, index) => (
+          commentsToShow.map((comment, index) => (
             <CommentContainer key={index}>
               <ProfileCircle
+                id={comment.contactId}
                 firstName={comment.firstName}
                 lastName={comment.lastName}
               />
-              <CommentText>{comment.text}</CommentText>
+              <CommentText>
+                <p style={{ fontWeight: "bold", margin: 1 }}>
+                  {comment.firstName} {comment.lastName}
+                </p>
+                <p style={{ margin: 1 }}>{comment.text}</p>
+              </CommentText>
             </CommentContainer>
           ))}
       </CommentList>
       <CommentForm onSubmit={handleSubmit}>
+        <ProfileCircle
+          firstName={userProfile.firstName}
+          lastName={userProfile.lastName}
+        />
         <TextArea
           rows="1"
           placeholder="Add a comment..."
@@ -112,7 +158,7 @@ const CommentSection = ({ post }) => {
           onChange={(e) => setNewComment(e.target.value)}
         />
         <IconWrapper onClick={handleSubmit}>
-          <FaPaperPlane size={20} />
+          <FaPaperPlane style={{ marginRight: "15px" }} size={20} />
         </IconWrapper>
       </CommentForm>
     </div>
@@ -121,6 +167,7 @@ const CommentSection = ({ post }) => {
 
 CommentSection.propTypes = {
   post: PropTypes.object.isRequired,
+  showAllComments: PropTypes.bool,
 };
 
 export default CommentSection;
